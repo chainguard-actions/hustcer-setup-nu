@@ -1,0 +1,38 @@
+name: Test Nu setup with check-latest enabled
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: setup-nu
+        uses: .
+        with:
+          check-latest: true
+          github-token: ${{ github.token }}
+      - name: Assert nu is on PATH
+        run: |
+          echo "Checking nu is available..."
+          which nu || { echo "FAIL: nu not found on PATH"; exit 1; }
+          echo "PASS: nu found at $(which nu)"
+      - name: Assert nu runs and returns a version
+        run: |
+          echo "Running nu --version..."
+          NU_VERSION=$(nu --version)
+          echo "nu version: $NU_VERSION"
+          if [ -z "$NU_VERSION" ]; then
+            echo "FAIL: nu --version returned empty output"
+            exit 1
+          fi
+          echo "PASS: nu is installed and reports version $NU_VERSION"
+      - name: Assert nu can execute a simple script
+        run: |
+          echo "Running a simple nu command..."
+          RESULT=$(nu -c '"hello from nushell"')
+          echo "Result: $RESULT"
+          if [ "$RESULT" != "hello from nushell" ]; then
+            echo "FAIL: expected 'hello from nushell' but got '$RESULT'"
+            exit 1
+          fi
+          echo "PASS: nu executed script successfully"
