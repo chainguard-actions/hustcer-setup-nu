@@ -1,0 +1,31 @@
+# REF:
+#   https://cspell.org/configuration/
+# Usage:
+#   npx cspell --no-progress .
+
+words:
+- msvc
+- nuon
+- GHES
+- gstat
+- rsort
+- ECODE
+- riscv
+- loong
+- endfor
+- dotenv
+- nushell
+- hustcer
+- rsbuild
+- justfile
+- lefthook
+- linewise
+- DeepSeek
+- dataframe
+- loongarch
+- noreferrer
+- Unsanitized
+ignorePaths:
+- dist
+- pnpm-lock.yaml
+
