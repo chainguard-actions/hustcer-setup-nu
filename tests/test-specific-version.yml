@@ -1,0 +1,36 @@
+name: Test specific nushell version installation
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: setup-nu
+        uses: .
+        with:
+          version: '0.101.0'
+          github-token: ${{ github.token }}
+      - name: Assert nu is available on PATH
+        run: |
+          echo "Checking nu is on PATH..."
+          if ! command -v nu >/dev/null 2>&1; then
+            echo "FAIL: nu command not found on PATH"
+            exit 1
+          fi
+          echo "PASS: nu is available"
+      - name: Assert nu version matches requested version
+        run: |
+          NU_VERSION=$(nu --version)
+          echo "nu version: $NU_VERSION"
+          if [ -z "$NU_VERSION" ]; then
+            echo "FAIL: nu --version returned empty output"
+            exit 1
+          fi
+          # Check that the version contains the expected version string
+          if echo "$NU_VERSION" | grep -q "0.101.0"; then
+            echo "PASS: nu version matches 0.101.0"
+          else
+            echo "FAIL: expected version 0.101.0 but got $NU_VERSION"
+            exit 1
+          fi
