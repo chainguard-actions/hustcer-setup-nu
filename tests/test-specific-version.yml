@@ -1,0 +1,38 @@
+name: Test specific version installation
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: setup-nu
+        uses: .
+        with:
+          version: '0.101.0'
+      - name: Assert nu is installed with correct version
+        run: |
+          echo "Checking nu is on PATH..."
+          which nu || { echo "FAIL: nu not found on PATH"; exit 1; }
+          NU_VERSION=$(nu --version)
+          echo "nu version: $NU_VERSION"
+          if [ -z "$NU_VERSION" ]; then
+            echo "FAIL: nu --version returned empty string"
+            exit 1
+          fi
+          # Check that the installed version matches the requested version
+          if echo "$NU_VERSION" | grep -q "0.101.0"; then
+            echo "PASS: nu version 0.101.0 is installed"
+          else
+            echo "FAIL: expected version 0.101.0, got '$NU_VERSION'"
+            exit 1
+          fi
+      - name: Assert nu can run arithmetic
+        run: |
+          RESULT=$(nu -c '1 + 1')
+          echo "nu arithmetic output: $RESULT"
+          if [ "$RESULT" != "2" ]; then
+            echo "FAIL: expected '2', got '$RESULT'"
+            exit 1
+          fi
+          echo "PASS"

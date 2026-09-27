@@ -1,0 +1,33 @@
+name: Test check-latest flag
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: setup-nu
+        uses: .
+        with:
+          version: '*'
+          check-latest: true
+      - name: Assert nu is installed and executable with check-latest
+        run: |
+          echo "Checking nu is on PATH..."
+          which nu || { echo "FAIL: nu not found on PATH"; exit 1; }
+          NU_VERSION=$(nu --version)
+          echo "nu version: $NU_VERSION"
+          if [ -z "$NU_VERSION" ]; then
+            echo "FAIL: nu --version returned empty string"
+            exit 1
+          fi
+          echo "PASS: nu is installed with check-latest=true, version=$NU_VERSION"
+      - name: Assert nu can run a list operation
+        run: |
+          RESULT=$(nu -c '[1, 2, 3] | length')
+          echo "nu list length output: $RESULT"
+          if [ "$RESULT" != "3" ]; then
+            echo "FAIL: expected '3', got '$RESULT'"
+            exit 1
+          fi
+          echo "PASS"
