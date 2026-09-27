@@ -1,0 +1,27 @@
+name: Test basic Nu setup (default version)
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: setup-nu
+        uses: .
+        with:
+          github-token: ${{ github.token }}
+      - name: Assert nu is on PATH
+        run: |
+          echo "Checking nu is available..."
+          which nu || { echo "FAIL: nu not found on PATH"; exit 1; }
+          echo "PASS: nu is on PATH"
+      - name: Assert nu runs successfully
+        run: |
+          echo "Running nu --version..."
+          NU_VERSION=$(nu --version)
+          echo "nu version: $NU_VERSION"
+          if [ -z "$NU_VERSION" ]; then
+            echo "FAIL: nu --version returned empty output"
+            exit 1
+          fi
+          echo "PASS: nu is functional"

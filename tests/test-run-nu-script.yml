@@ -1,0 +1,38 @@
+name: Test running Nu commands after setup
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: setup-nu
+        uses: .
+        with:
+          version: '*'
+          github-token: ${{ github.token }}
+      - name: Assert nu can run a simple command
+        run: |
+          echo "Running a simple nu command..."
+          RESULT=$(nu -c '"hello from nushell"')
+          echo "Result: $RESULT"
+          if [ "$RESULT" != "hello from nushell" ]; then
+            echo "FAIL: expected 'hello from nushell' but got: $RESULT"
+            exit 1
+          fi
+          echo "PASS: nu command executed successfully"
+      - name: Assert nu can do arithmetic
+        run: |
+          echo "Running nu arithmetic..."
+          RESULT=$(nu -c '2 + 2')
+          echo "Result: $RESULT"
+          if [ "$RESULT" != "4" ]; then
+            echo "FAIL: expected '4' but got: $RESULT"
+            exit 1
+          fi
+          echo "PASS: nu arithmetic works"
+      - name: Assert nu can list files
+        run: |
+          echo "Running nu ls command..."
+          nu -c 'ls | length' || { echo "FAIL: nu ls command failed"; exit 1; }
+          echo "PASS: nu ls command works"
