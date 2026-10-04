@@ -1,0 +1,29 @@
+name: Test check-latest option
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: setup-nu
+        uses: .
+        with:
+          check-latest: true
+          github-token: ${{ github.token }}
+      - name: Assert nu is on PATH
+        run: |
+          echo "Checking nu is available..."
+          which nu || { echo "FAIL: nu not found on PATH"; exit 1; }
+          echo "PASS: nu found at $(which nu)"
+      - name: Assert nu runs a simple command
+        run: |
+          echo "Running a simple nu command..."
+          RESULT=$(nu -c '"hello from nu"')
+          echo "Result: $RESULT"
+          if [ "$RESULT" = "hello from nu" ]; then
+            echo "PASS: nu executed command successfully"
+          else
+            echo "FAIL: expected 'hello from nu' but got '$RESULT'"
+            exit 1
+          fi
