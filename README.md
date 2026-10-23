@@ -14,6 +14,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 | v3.26 | [`v3.26`](https://github.com/chainguard-actions/hustcer-setup-nu/tree/v3.26) | [`f3fd653`](https://github.com/hustcer/setup-nu/commit/f3fd65374ffc4d60974c0dd2f7263c6c5c285f81) |
 | v3.27 | [`v3.27`](https://github.com/chainguard-actions/hustcer-setup-nu/tree/v3.27) | [`9215c80`](https://github.com/hustcer/setup-nu/commit/9215c80adb545a85c419d5085b76eb6d082f49e7) |
 | v3.28 | [`v3.28`](https://github.com/chainguard-actions/hustcer-setup-nu/tree/v3.28) | [`95cd3bf`](https://github.com/hustcer/setup-nu/commit/95cd3bfe252450ef7d35dd9a7ddecf3484341134) |
+| v3.29 | [`v3.29`](https://github.com/chainguard-actions/hustcer-setup-nu/tree/v3.29) | [`eacad52`](https://github.com/hustcer/setup-nu/commit/eacad52a4634c4f8d17a94916f93be6856861b9c) |
 
 ## Privacy
 
