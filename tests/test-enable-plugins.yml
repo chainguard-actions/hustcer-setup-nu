@@ -1,0 +1,29 @@
+name: Test enable-plugins
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          version: '0.101.0'
+          enable-plugins: 'true'
+      - name: Assert nu installed and plugin binaries present
+        run: |
+          VERSION="$(nu --version)"
+          echo "version: $VERSION"
+          if [ "$VERSION" != "0.101.0" ]; then
+            echo "FAIL: expected 0.101.0"
+            exit 1
+          fi
+          NU_DIR="$(dirname "$(which nu)")"
+          ls -la "$NU_DIR"
+          if ! ls "$NU_DIR" | grep -q '^nu_plugin_'; then
+            echo "FAIL: no nu_plugin_* binaries found next to nu"
+            exit 1
+          fi
+          nu -c 'plugin list | to text' || true
+          echo "PASS"

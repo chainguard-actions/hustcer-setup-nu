@@ -1,0 +1,29 @@
+name: Test check-latest
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          version: '*'
+          check-latest: 'true'
+      - name: Assert nu runs a script
+        run: |
+          VERSION="$(nu --version)"
+          echo "version: $VERSION"
+          MINOR="$(echo "$VERSION" | cut -d. -f2)"
+          if [ -z "$MINOR" ] || [ "$MINOR" -lt 101 ]; then
+            echo "FAIL: expected a recent version (>= 0.101)"
+            exit 1
+          fi
+          OUT="$(nu -c '[1 2 3] | math sum')"
+          echo "output: $OUT"
+          if [ "$OUT" != "6" ]; then
+            echo "FAIL: expected 6"
+            exit 1
+          fi
+          echo "PASS"
