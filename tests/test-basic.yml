@@ -1,0 +1,32 @@
+name: Test basic usage (latest version)
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+      - name: Assert nu is installed and on PATH
+        run: |
+          if ! command -v nu >/dev/null 2>&1; then
+            echo "FAIL: nu not found on PATH"
+            exit 1
+          fi
+          V="$(nu --version)"
+          echo "nu version: $V"
+          if ! echo "$V" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+'; then
+            echo "FAIL: unexpected version output"
+            exit 1
+          fi
+          echo "PASS"
+      - name: Assert nu can evaluate commands
+        run: |
+          OUT="$(nu -c 'echo (1 + 2)')"
+          echo "output: $OUT"
+          if [ "$OUT" != "3" ]; then
+            echo "FAIL: expected 3"
+            exit 1
+          fi
+          echo "PASS"

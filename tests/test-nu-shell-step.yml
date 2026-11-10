@@ -1,0 +1,25 @@
+name: Test running a step with shell nu
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          version: '0.98.0'
+      - name: Run a nu script file
+        run: |
+          cat > /tmp/test.nu <<'EOF'
+          let nums = [1 2 3 4]
+          print ($nums | math sum)
+          EOF
+          OUT="$(nu /tmp/test.nu)"
+          echo "output: $OUT"
+          if [ "$OUT" != "10" ]; then
+            echo "FAIL: expected 10"
+            exit 1
+          fi
+          echo "PASS"

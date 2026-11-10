@@ -1,0 +1,24 @@
+name: Test check-latest
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          version: '*'
+          check-latest: true
+      - name: Assert nu installed with a recent version
+        run: |
+          V="$(nu --version)"
+          echo "nu version: $V"
+          MINOR="$(echo "$V" | cut -d. -f2)"
+          MAJOR="$(echo "$V" | cut -d. -f1)"
+          if [ "$MAJOR" -eq 0 ] && [ "$MINOR" -lt 100 ]; then
+            echo "FAIL: expected latest version >= 0.100"
+            exit 1
+          fi
+          echo "PASS"
