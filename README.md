@@ -15,6 +15,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 | v3.27 | [`v3.27`](https://github.com/chainguard-actions/hustcer-setup-nu/tree/v3.27) | [`9215c80`](https://github.com/hustcer/setup-nu/commit/9215c80adb545a85c419d5085b76eb6d082f49e7) | [`HARDENING.md`](https://github.com/chainguard-actions/hustcer-setup-nu/blob/v3.27/HARDENING.md) |
 | v3.28 | [`v3.28`](https://github.com/chainguard-actions/hustcer-setup-nu/tree/v3.28) | [`95cd3bf`](https://github.com/hustcer/setup-nu/commit/95cd3bfe252450ef7d35dd9a7ddecf3484341134) | [`HARDENING.md`](https://github.com/chainguard-actions/hustcer-setup-nu/blob/v3.28/HARDENING.md) |
 | v3.29 | [`v3.29`](https://github.com/chainguard-actions/hustcer-setup-nu/tree/v3.29) | [`eacad52`](https://github.com/hustcer/setup-nu/commit/eacad52a4634c4f8d17a94916f93be6856861b9c) | [`HARDENING.md`](https://github.com/chainguard-actions/hustcer-setup-nu/blob/v3.29/HARDENING.md) |
+| v3.30 | [`v3.30`](https://github.com/chainguard-actions/hustcer-setup-nu/tree/v3.30) | [`1b8faed`](https://github.com/hustcer/setup-nu/commit/1b8faed9a8ff673c8ce0beae243e0b72d0787241) | [`HARDENING.md`](https://github.com/chainguard-actions/hustcer-setup-nu/blob/v3.30/HARDENING.md) |
 
 ## Privacy
 
