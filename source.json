@@ -4,8 +4,13 @@
   "version": "v3.28",
   "commit_sha": "95cd3bfe252450ef7d35dd9a7ddecf3484341134",
   "url": "https://github.com/hustcer/setup-nu",
-  "policy_sha": "d636be7e43ef829af6e853da6b3c7566db9f72fe",
+  "policy_sha": "374911c4be584df24e6da57af2d990570ef0f859",
   "test_policy_sha": "843adf9e4b8f85d0c08b27b9d0b09dd094b54702",
   "test_agent_version": "2",
-  "harden_agent_version": "2"
+  "harden_agent_version": "2",
+  "dist_artifact": {
+    "gcs_uri": "gs://patch-actions-node-artifacts/dist-artifacts/hustcer/setup-nu/v3.28/sha256-128c7ea8b3eb19c6747421ce85372db692d5e2b0c122ee7dcb31279fea8b362c.tar.gz",
+    "sha256": "128c7ea8b3eb19c6747421ce85372db692d5e2b0c122ee7dcb31279fea8b362c",
+    "size_bytes": 400928
+  }
 }
